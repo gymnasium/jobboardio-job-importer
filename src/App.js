@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import JSONParser from './components/JSONParser';
@@ -13,6 +12,7 @@ class App extends Component {
           <img src="https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png" className="App-logo" alt="logo" />
           <h2>Jobboard.io JSON->.csv preprocessor</h2>
         </div>
+
         <JSONParser source={jsonInput} />
 
       </div>
