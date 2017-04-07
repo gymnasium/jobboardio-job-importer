@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import JSONParser from './components/JSONParser';
-import jsonInput from './sampeinput';
+import XMLParser from './components/XMLParser';
 
 class App extends Component {
   render() {
@@ -13,7 +12,7 @@ class App extends Component {
           <h2>Jobboard.io JSON->.csv preprocessor</h2>
         </div>
 
-        <JSONParser source={jsonInput} />
+        <XMLParser />
 
       </div>
     );

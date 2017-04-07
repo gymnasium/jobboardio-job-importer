@@ -7,7 +7,8 @@
     "lodash": "^4.17.4",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
