@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src="https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png" className="App-logo" alt="logo" />
-          <h2>Jobboard.io JSON->.csv preprocessor</h2>
+          <h2>Jobboard.io .csv preprocessor</h2>
         </div>
 
         <XMLParser />
