@@ -79,7 +79,7 @@ class XMLParser extends Component {
         // apply_email: 'applyemail@aquent.com', //TODO: what address to use here?
         featured: 'false', //TODO: all unfeatured? 
         // purchaser_email: 'purchaseremail@aquent.com', //TODO: what address to use here?
-        created_at: moment(job.date[0]).calendar(),
+        created_at: moment(job.date[0]).format('MM/DD/YY'),
         employer_id: 111, //TODO: get Aquent's employerID
         category: job.category[0], //TODO: get category
         logo: 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png',
