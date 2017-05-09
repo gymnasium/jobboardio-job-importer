@@ -4,6 +4,7 @@ import request from 'request';
 
 import json2csv from 'json2csv';
 import xml2js from 'xml2js';
+import moment from 'moment';
 
 class XMLParser extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class XMLParser extends Component {
         // apply_email: 'applyemail@aquent.com', //TODO: what address to use here?
         featured: 'false', //TODO: all unfeatured? 
         // purchaser_email: 'purchaseremail@aquent.com', //TODO: what address to use here?
-        created_at: job.date[0],
+        created_at: moment(job.date[0]).calendar(),
         employer_id: 111, //TODO: get Aquent's employerID
         category: job.category[0], //TODO: get category
         logo: 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png',
