@@ -9,13 +9,6 @@ import moment from 'moment';
 class XMLParser extends Component {
   constructor(props) {
     super();
-
-    this.apiUrl = 'https://gist.githubusercontent.com/mbifulco/bfb4e491d1ad49a5f841896f0d5e9d68/raw/48a755f2d2225810a928320d5c42c89707fc399f/xmlinput.xml';
-    request.get(this.apiUrl, (error, response, body) => {
-      if (!error && response.statusCode === 200) {
-        this.parseXML(body);
-      }
-    });
   }
 
   render() {
@@ -30,15 +23,54 @@ class XMLParser extends Component {
         marginTop: '2em',
         fontSize: '1.25em',
       },
+      input: {
+        fontSize: '18pt',
+        minWidth: '650px',
+      },
+      button: {
+        width: '100px',
+        fontSize: '18pt',
+        marginLeft: '0.5em',
+      }
     };
 
     return (
       <div>
-        <h1>pulling from XML in this gist:</h1>
-        <small>{this.apiUrl}</small>
-        <textarea style={styles.output} value={output} readOnly />
+        <h1>Enter a URL to process XML From:</h1>
+        <h2>
+          <input 
+            type="text"
+            ref={ (input) => { this.urlInput = input } } 
+            placeholder="http://www.blah.com/output.xml"
+            style={styles.input}
+          />
+          <button 
+            type="submit"
+            onClick={ (e) => { e.preventDefault; this.handleProcessClicked(); }}
+            style={styles.button}
+          >
+            Load
+          </button>
+          <textarea style={styles.output} value={output} readOnly />
+        </h2>
       </div>
     );
+  }
+
+  handleProcessClicked() {
+    const url = this.urlInput.value;
+    if (!url) {
+      return;
+    }
+    this.parseXMLFromUrl(url);
+  }
+
+  parseXMLFromUrl(url) {
+    request.get(url, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        this.parseXML(body);
+      }
+    });
   }
 
   parseXML(xmlString) {
