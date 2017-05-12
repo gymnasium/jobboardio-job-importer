@@ -46,7 +46,7 @@ class XMLParser extends Component {
           />
           <button 
             type="submit"
-            onClick={ (e) => { e.preventDefault; this.handleProcessClicked(); }}
+            onClick={ (e) => { e.preventDefault(); this.handleProcessClicked(); }}
             style={styles.button}
           >
             Load
