@@ -13,7 +13,8 @@ class XMLParser extends Component {
 
   render() {
     const {
-      output 
+      output,
+      error, 
     } = this.state || {};
 
     const styles = {
@@ -31,28 +32,42 @@ class XMLParser extends Component {
         width: '100px',
         fontSize: '18pt',
         marginLeft: '0.5em',
+      },
+      errorMessage: {
+        color: 'white',
+        background: '#d43f3a',
+        padding: '1.5em 0',
+        marginTop: 0,
       }
     };
 
+    let errorBlock;
+    if (error) {
+      errorBlock = <h2 style={styles.errorMessage}>{error}</h2>;
+    }
     return (
       <div>
+        {errorBlock}
         <h1>Enter a URL to process XML From:</h1>
-        <h2>
-          <input 
-            type="text"
-            ref={ (input) => { this.urlInput = input } } 
-            placeholder="http://www.blah.com/output.xml"
-            style={styles.input}
-          />
-          <button 
-            type="submit"
-            onClick={ (e) => { e.preventDefault(); this.handleProcessClicked(); }}
-            style={styles.button}
-          >
-            Load
-          </button>
-          <textarea style={styles.output} value={output} readOnly />
-        </h2>
+        
+        <input 
+          type="text"
+          ref={ (input) => { this.urlInput = input } } 
+          placeholder="http://www.blah.com/output.xml"
+          style={styles.input}
+        />
+        <button 
+          type="submit"
+          onClick={ (e) => {
+            e.preventDefault();
+            this.handleProcessClicked();
+          }}
+          style={styles.button}
+        >
+          Load
+        </button>
+
+        <textarea style={styles.output} value={output} readOnly />
       </div>
     );
   }
@@ -69,15 +84,26 @@ class XMLParser extends Component {
     request.get(url, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         this.parseXML(body);
+      } else {
+        this.setState({
+          error: error.message,
+        });
       }
     });
   }
 
   parseXML(xmlString) {
     xml2js.parseString(xmlString, (err, result) => {
+      if (err) {
+        this.setState({
+          error: err.message,
+        });
+        return;
+      }
       const jobs = result.source.job;
       this.setState({
-        output: this.parseJSON(jobs)
+        output: this.parseJSON(jobs),
+        error: undefined,
       });
     });
   }
