@@ -7,27 +7,17 @@ class JSONParser extends Component {
   constructor(props) {
     super();
 
-    const { source } = props;
-
-    const output = this.parseJSON(source);
-
-    this.state = {
-      output,
-    };
-
-    /*
+    let output;
     const apiUrl = 'https://aquent.com/api/content/render/false/query/+structureName:AquentJob%20+AquentJob.isPosted:true/orderby/modDate%20desc';
     request.get(apiUrl, (error, response, body) => {
       if (!error && response.statusCode === 200) {
-        debugger;
-
-        const output = this.parseJSON(body);
-        this.state = {
+        const jobs = JSON.parse(body).contentlets;
+        output = this.parseJobs(jobs);
+        this.setState({
           output,
-        };
+        });
       }
     });
-    */
   }
 
   render() {
@@ -52,14 +42,11 @@ class JSONParser extends Component {
       <div>
         <h1>As CSV</h1>
         <textarea style={styles.output} value={output} readOnly />
-
-        <h1>Source</h1>
-        <textarea style={styles.output} value={JSON.stringify(source)} readOnly />
       </div>
     );
   }
 
-  parseJSON(source) {
+  parseJobs(jobListings) {
     const fields = [
       'title',
       'company',
@@ -77,7 +64,7 @@ class JSONParser extends Component {
       'published',
     ];
 
-    const jobs = map(source.contentlets, (listing) => {
+    const jobs = map(jobListings, (listing) => {
       return {
         title: listing.title,
         company: 'Aquent',
@@ -96,6 +83,7 @@ class JSONParser extends Component {
       }
     });
 
+    
     const output = json2csv({
       data: jobs,
       fields,

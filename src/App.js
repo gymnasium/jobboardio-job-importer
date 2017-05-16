@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import XMLParser from './components/XMLParser';
+import JSONParser from './components/JSONParser';
 
 class App extends Component {
   render() {
