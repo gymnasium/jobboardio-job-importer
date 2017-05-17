@@ -26,10 +26,6 @@ class JSONParser extends Component {
   }
 
   render() {
-    const { 
-      source
-    } = this.props;
-
     const {
       output 
     } = this.state || {};
