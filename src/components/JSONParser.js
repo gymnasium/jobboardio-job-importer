@@ -3,13 +3,17 @@ import json2csv from 'json2csv';
 import { map } from 'lodash';
 import request from 'request';
 import { Markets } from '../utils/constants';
+import moment from 'moment';
 
 class JSONParser extends Component {
   constructor(props) {
     super();
 
     let output;
-    const apiUrl = 'https://aquent.com/api/content/render/false/query/+structureName:AquentJob%20+AquentJob.isPosted:true/orderby/modDate%20desc';
+
+    const JOB_COUNT = 100;
+
+    const apiUrl = `https://aquent.com/api/content/render/false/query/+structureName:AquentJob/orderby/modDate%20desc/limit/${JOB_COUNT}`;
     request.get(apiUrl, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         const jobs = JSON.parse(body).contentlets;
@@ -89,7 +93,6 @@ class JSONParser extends Component {
           employerId = 'ad253037-147e-499c-860b-67c3aa91f296';
           companyUrl = 'aquent.com';
       }
-      debugger;
 
       return {
         title: listing.title,
@@ -104,7 +107,7 @@ class JSONParser extends Component {
         featured: false,
         purchaser_email: purchaserEmail,
         placement_type: listing.placementTypeId,
-        created_at: listing.postedDate,
+        created_at: moment(listing.postedDate).format('MM/DD/YY'),
         employer_id: employerId,
         category: listing.minorSpecialty1, 
         logo: 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png',
