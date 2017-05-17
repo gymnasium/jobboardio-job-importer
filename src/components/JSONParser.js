@@ -52,37 +52,63 @@ class JSONParser extends Component {
       'company',
       'company_url',
       'location',
+      'marketId',
       'description',
       'apply_url',
       'apply_email',
       'featured',
       'purchaser_email',
+      'placement_type',
       'created_at',
       'employer_id',
       'category',
       'logo',
       'published',
+      'is_posted',
     ];
 
     const jobs = map(jobListings, (listing) => {
+
+      const brand = listing.brand;
+      let purchaserEmail;
+      let employerId;
+      let companyUrl;
+
+      switch (brand) {
+        case 'Vitamin T': 
+          purchaserEmail = 'amiller+vtjobs@aquent.com';
+          employerId = '857f3eea-8852-401a-8b53-03cddeff1841';
+          companyUrl = 'vitamintalent.com';
+          break;
+
+        case 'Aquent':
+        default:
+          purchaserEmail = 'amiller+aqjobs@aquent.com';
+          employerId = 'ad253037-147e-499c-860b-67c3aa91f296';
+          companyUrl = 'aquent.com';
+      }
+      debugger;
+
       return {
         title: listing.title,
         company: 'Aquent',
-        company_url: 'http://aquent.com', //TODO: are all jobs going to be attributed to aquent?
+        company_url: companyUrl, //TODO: are all jobs going to be attributed to aquent?
         location: listing.marketId,
+        marketId: listing.locationId,
         description: `${listing.description}<br />${listing.clientDescription}`,
         apply_url: `https://aquent.com/find-work/${listing.jobId}`,
-        apply_email: 'applyemail@aquent.com', //TODO: what address to use here?
-        featured: 'false', //TODO: all unfeatured? 
-        purchaser_email: 'purchaseremail@aquent.com', //TODO: what address to use here?
+        apply_email: '',
+        featured: false,
+        purchaser_email: purchaserEmail,
+        placement_type: listing.placementTypeId,
         created_at: listing.postedDate,
-        employer_id: 111, //TODO: get Aquent's employerID
-        category: 1, //TODO: get category
+        employer_id: employerId,
+        category: listing.minorSpecialty1, 
         logo: 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png',
-        published: 'false',
+        published: false,
+        is_posted: listing.isPosted,
       }
     });
-
     
     const output = json2csv({
       data: jobs,

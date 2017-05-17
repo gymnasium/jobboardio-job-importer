@@ -13,7 +13,7 @@ class App extends Component {
           <h2>Jobboard.io .csv preprocessor</h2>
         </div>
 
-        <XMLParser />
+        <JSONParser />
 
       </div>
     );
