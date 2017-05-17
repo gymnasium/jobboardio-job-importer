@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import json2csv from 'json2csv';
 import { map } from 'lodash';
 import request from 'request';
+import { Markets } from '../utils/constants';
 
 class JSONParser extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class JSONParser extends Component {
       'company_url',
       'location',
       'marketId',
+      'marketName',
       'description',
       'apply_url',
       'apply_email',
@@ -95,6 +97,7 @@ class JSONParser extends Component {
         company_url: companyUrl, //TODO: are all jobs going to be attributed to aquent?
         location: listing.marketId,
         marketId: listing.locationId,
+        marketName: Markets[listing.locationId],
         description: `${listing.description}<br />${listing.clientDescription}`,
         apply_url: `https://aquent.com/find-work/${listing.jobId}`,
         apply_email: '',
