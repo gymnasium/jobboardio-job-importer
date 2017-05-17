@@ -47,4 +47,4 @@ export const Markets = {
   79: 'Nagoya',
   64: 'Osaka',
   44: 'Tokyo',
-}; 
+};
