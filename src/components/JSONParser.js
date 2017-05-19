@@ -75,12 +75,14 @@ class JSONParser extends Component {
       let purchaserEmail;
       let employerId;
       let companyUrl;
+      let applyUrl;
 
       switch (brand) {
         case 'Vitamin T': 
           purchaserEmail = 'amiller+vtjobs@aquent.com';
           employerId = '857f3eea-8852-401a-8b53-03cddeff1841';
           companyUrl = 'vitamintalent.com';
+          applyUrl = `https://vitamintalent.com/talent/jobs/${listing.jobId}`;
           break;
 
         case 'Aquent':
@@ -88,17 +90,18 @@ class JSONParser extends Component {
           purchaserEmail = 'amiller+aqjobs@aquent.com';
           employerId = 'ad253037-147e-499c-860b-67c3aa91f296';
           companyUrl = 'aquent.com';
+          applyUrl = `https://aquent.com/find-work/${listing.jobId}`;
       }
 
       return {
         title: listing.title,
-        company: 'Aquent',
+        company: brand,
         company_url: companyUrl, //TODO: are all jobs going to be attributed to aquent?
         location: listing.marketId,
         marketId: listing.locationId,
         marketName: Markets[listing.locationId],
         description: `${listing.description}<br />${listing.clientDescription}`,
-        apply_url: `https://aquent.com/find-work/${listing.jobId}`,
+        apply_url: applyUrl,
         apply_email: '',
         featured: false,
         purchaser_email: purchaserEmail,
