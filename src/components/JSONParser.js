@@ -11,7 +11,7 @@ class JSONParser extends Component {
 
     let output;
 
-    const JOB_COUNT = 100;
+    const JOB_COUNT = 300;
 
     const apiUrl = `https://aquent.com/api/content/render/false/query/+structureName:AquentJob/orderby/modDate%20desc/limit/${JOB_COUNT}`;
     request.get(apiUrl, (error, response, body) => {
