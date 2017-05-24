@@ -71,26 +71,37 @@ class JSONParser extends Component {
 
     const jobs = map(jobListings, (listing) => {
 
-      const brand = listing.brand;
+      let brand = listing.brand;
       let purchaserEmail;
       let employerId;
       let companyUrl;
       let applyUrl;
+      let logoUrl = 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png';
 
       switch (brand) {
+        case 'Firebrand':
+          applyUrl =  `https://aquent.com/find-work/${listing.jobId}`;
+          companyUrl = 'https://firebrandtalent.com.au';
+          employerId = 'ad83073e-96c8-457d-b44a-7b45299625a';
+          purchaserEmail = 'amiller+fbjobs@aquent.com';
+          logoUrl = 'https://gymnasium.github.io/jobs/img/logo-fb.jpg';
+
         case 'Vitamin T': 
-          purchaserEmail = 'amiller+vtjobs@aquent.com';
-          employerId = '857f3eea-8852-401a-8b53-03cddeff1841';
-          companyUrl = 'vitamintalent.com';
           applyUrl = `https://vitamintalent.com/talent/jobs/${listing.jobId}`;
+          companyUrl = 'https://vitamintalent.com';
+          employerId = '857f3eea-8852-401a-8b53-03cddeff1841';
+          logoUrl = 'https://gymnasium.github.io/jobs/img/logo-vt.png';
+          purchaserEmail = 'amiller+vtjobs@aquent.com'; 
           break;
 
         case 'Aquent':
         default:
-          purchaserEmail = 'amiller+aqjobs@aquent.com';
-          employerId = 'ad253037-147e-499c-860b-67c3aa91f296';
-          companyUrl = 'aquent.com';
           applyUrl = `https://aquent.com/find-work/${listing.jobId}`;
+          brand = 'Aquent'; // some brands may come in as not 'Aquent'.  Handling the default: case here
+          companyUrl = 'https://aquent.com';
+          employerId = 'ad253037-147e-499c-860b-67c3aa91f296';
+          logoUrl = 'https://gymnasium.github.io/jobs/img/logo-aquent.png';
+          purchaserEmail = 'amiller+aqjobs@aquent.com';
       }
 
       return {
@@ -109,7 +120,7 @@ class JSONParser extends Component {
         created_at: moment(listing.postedDate).format('MM/DD/YY'),
         employer_id: employerId,
         category: listing.minorSpecialty1, 
-        logo: 'https://thegymnasium.com/static/gymnasium/images/gymnasiumLogo.png',
+        logo: logoUrl,
         published: false,
         is_posted: listing.isPosted,
       }
