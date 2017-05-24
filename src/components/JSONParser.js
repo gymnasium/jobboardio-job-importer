@@ -13,7 +13,10 @@ class JSONParser extends Component {
 
     const JOB_COUNT = 300;
 
-    const apiUrl = `https://aquent.com/api/content/render/false/query/+structureName:AquentJob/orderby/modDate%20desc/limit/${JOB_COUNT}`;
+    // using es lucene syntax: https://dotcms.com/docs/latest/content-search-syntax#Lucene
+    // format is !ID && !ID && !ID
+    const marketsToExclude = '!92%20&&%20!79%20&&%20!64%20&&%20!44'; // japanese marketIds
+    const apiUrl = `https://aquent.com/api/content/render/false/query/+structureName:AquentJob%20+AquentJob.marketId:(${marketsToExclude})/orderby/modDate%20desc/limit/${JOB_COUNT}`;
     request.get(apiUrl, (error, response, body) => {
       if (!error && response.statusCode === 200) {
         const jobs = JSON.parse(body).contentlets;
@@ -85,6 +88,7 @@ class JSONParser extends Component {
           employerId = 'ad83073e-96c8-457d-b44a-7b45299625a';
           purchaserEmail = 'amiller+fbjobs@aquent.com';
           logoUrl = 'https://gymnasium.github.io/jobs/img/logo-fb.jpg';
+          break;
 
         case 'Vitamin T': 
           applyUrl = `https://vitamintalent.com/talent/jobs/${listing.jobId}`;
